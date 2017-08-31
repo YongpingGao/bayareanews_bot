@@ -24,30 +24,29 @@ function sendMsgToChannel(channel, msg) {
     })
 }
 
-var url = "";
-// Finally, start our server
+// var url = "";
+// // Finally, start our server
 app.listen(3000, function() {
-    setInterval(function(){
-        axios.get('https://hacker-news.firebaseio.com/v0/topstories.json')
-            .then((res) => {
-                return axios.get("https://hacker-news.firebaseio.com/v0/item/" + res.data[0] + ".json");
-            })
-            .then((res) => {
-                if(url !== res.data.url) {
-                    const msg =  res.data.title + '\n' + res.data.url;
-                    sendMsgToChannel(config.telegram_channel, msg);
-                    url = res.data.url;
-                }
-            })
-            .catch(err => {
-                console.log(err);
-            });
-    }, config.polling_interval);
+    // setInterval(function(){
+    //     axios.get('https://hacker-news.firebaseio.com/v0/topstories.json')
+    //         .then((res) => {
+    //             return axios.get("https://hacker-news.firebaseio.com/v0/item/" + res.data[0] + ".json");
+    //         })
+    //         .then((res) => {
+    //             if(url !== res.data.url) {
+    //                 const msg =  res.data.title + '\n' + res.data.url;
+    //                 sendMsgToChannel(config.telegram_channel, msg);
+    //                 url = res.data.url;
+    //             }
+    //         })
+    //         .catch(err => {
+    //             console.log(err);
+    //         });
+    // }, config.polling_interval);
 
     redisclient.subscribe("bayareanews");
     redisclient.on('message', function (channel, message) {
-        if (channel == "bayareanews") {
-        //    message
+        if (channel == config.redis_channel) {
             sendMsgToChannel(config.telegram_channel, message);
         }
     });

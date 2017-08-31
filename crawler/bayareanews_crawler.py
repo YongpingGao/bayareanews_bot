@@ -14,6 +14,7 @@ basic_url = "https://wanqu.co"
 channel_name = "bayareanews"
 day_urls = []
 external_urls = []
+schd = "00:00"
 
 def job():
     redis_client = redis.StrictRedis(host=redis_host, port=redis_port)
@@ -40,7 +41,7 @@ def job():
         redis_client.publish(channel_name, data)
 
 
-schedule.every().day.at("00:00").do(job)
+schedule.every().day.at(schd).do(job)
 
 while True:
     schedule.run_pending()
