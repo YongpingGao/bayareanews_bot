@@ -1,4 +1,4 @@
-#!/usr/env/bin
+#!/usr/bin/env bash
 
 echo "start redis server..."
 redis-server&
