@@ -1,0 +1,4 @@
+redis
+schedule
+beautifulsoup4
+requests
