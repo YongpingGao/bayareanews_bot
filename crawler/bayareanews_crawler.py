@@ -4,19 +4,20 @@ from bs4 import BeautifulSoup
 import redis
 import schedule
 import time
-
+import argparse
+ 
 # nohup ./bayareanews_crawler.py &
 
 # init...
-redis_host = "localhost"
+redis_host = "redis_server"
 redis_port = "6379"
 basic_url = "https://wanqu.co"
 channel_name = "bayareanews"
-day_urls = []
-external_urls = []
-schd = "00:00"
+ 
 
 def job():
+    day_urls = []
+    external_urls = []
     redis_client = redis.StrictRedis(host=redis_host, port=redis_port)
 
     # get main page, prepare related urls
@@ -41,7 +42,14 @@ def job():
         redis_client.publish(channel_name, data)
 
 
-schedule.every().day.at(schd).do(job)
+parser = argparse.ArgumentParser(description='set schedule for crawling')
+parser.add_argument('schd', help='schedule in 00:00 format')
+
+
+args = parser.parse_args()
+
+schedule.every().day.at(args.schd).do(job)
+
 
 while True:
     schedule.run_pending()

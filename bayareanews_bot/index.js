@@ -4,7 +4,7 @@ const bodyParser = require('body-parser');
 const axios = require('axios');
 const config = require('./config');
 const redis = require('redis');
-var redisclient = redis.createClient(6379, "localhost");
+var redisclient = redis.createClient(config.redis_port, config.redis_host);
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({
