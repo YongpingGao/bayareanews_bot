@@ -49,8 +49,9 @@ parser.add_argument('schd', help='schedule in 00:00 format')
 args = parser.parse_args()
 
 schedule.every().day.at(args.schd).do(job)
-
+ 
 
 while True:
     schedule.run_pending()
     time.sleep(60)  # wait one minute
+ 
