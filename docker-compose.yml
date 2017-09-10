@@ -6,14 +6,14 @@ services:
     - "6379:6379"
  
   node_server:
-    image: jjasongao/telegram-bot:node_server
+    image: jjasongao/telegram_bayareanews:node_server
     ports:
     - "3000:3000"
     links:
       - redis_server
 
   crawler:
-    image: jjasongao/telegram-bot:crawler
+    image: jjasongao/telegram_bayareanews:crawler
     links:
       - redis_server
  
